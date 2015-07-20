@@ -6,12 +6,12 @@ http.createServer(function(req,res){
   var data = ''
   req.on('data',function(chunk){
     data += chunk;
-    var obj = JSON.parse(data);
-    console.log(obj.sensor + ": " + obj.value);
+    var obj = data.split(':');
+    console.log(obj[0]+': '+obj[1]);
   });
   console.log("body: "+req.body);
   console.log("data: ");
   req.on('end',function(){
     console.log('ended. data: '+data);
   });
-}).listen(3000,'192.168.1.1');
+}).listen(3000,'raspberrypi.home');
