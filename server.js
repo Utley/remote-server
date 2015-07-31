@@ -1,33 +1,25 @@
 var http = require('http');
-var gpio = require('pi-gpio');
+var piblaster = require('pi-blaster.js');
 var controls = [];
-var controls = function( name, pin ) {
+var Control = function( name, pin ) {
   this.name = name;
   this.pin = pin;
-  controls.append(this);
-  this.setup = function(){
-    //set up the pin
-    gpio.open(pin, "output", function(err) {
-      gpio.write(pin, 1, function(){
-        gpio.close(pin);
-      });
-    });
-  };
-  this.stop = function(){
-    gpio.open(pin, "output", function(err) {
-      gpio.write(pin, 0, function(){
-        gpio.close(pin);
-      });
-    });
+  this.on = false;
+  controls.push(this);
+  this.set = function(err, brightness){
+      console.log(err);
+      piblaster.setPwm(17, brightness / 100);
   };
 };
 
 http.createServer(function(req,res){
   var data = ''
+  var a = new Control("Control 1",12);
   req.on('data',function(chunk){
     data += chunk;
     var obj = data.split(':');
     console.log(obj[0]+': '+obj[1]);
+    a.set(null,Number(obj[1])); 
   });
   console.log("body: "+req.body);
   console.log("data: ");
