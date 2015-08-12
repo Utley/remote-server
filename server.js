@@ -1,6 +1,5 @@
 var http = require('http');
 var gpio = require('pi-gpio');
-
 var controls = [];
 var controls = function( name, pin ) {
   this.name = name;
@@ -18,7 +17,7 @@ var controls = function( name, pin ) {
     gpio.open(pin, "output", function(err) {
       gpio.write(pin, 0, function(){
         gpio.close(pin);
-      }); 
+      });
     });
   };
 };
