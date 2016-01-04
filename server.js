@@ -13,13 +13,13 @@ var Control = function( name, pin ) {
 };
 
 http.createServer(function(req,res){
-  var data = ''
+  var data = '';
   var a = new Control("Control 1",12);
   req.on('data',function(chunk){
     data += chunk;
     var obj = data.split(':');
     console.log(obj[0]+': '+obj[1]);
-    a.set(null,Number(obj[1])); 
+    a.set(null,Number(obj[1]));
   });
   console.log("body: "+req.body);
   console.log("data: ");
